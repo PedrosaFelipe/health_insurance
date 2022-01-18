@@ -1,6 +1,6 @@
 # Health_insurance
 
-## The project aims to find the most successful customers to accept a cross sell between two insurance products.
+## This project aims to help the company to make a cross-sell, where the model would classify in a rank the most favorable customers, who already have car insurance, and also buy the new life insurance together.
 
 #### This project was made by Felipe S Pedrosa.
 
