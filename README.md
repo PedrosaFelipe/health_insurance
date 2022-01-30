@@ -4,6 +4,8 @@
 
 #### This project was made by Felipe S Pedrosa.
 
+![image](https://user-images.githubusercontent.com/55566708/151688409-42d21d75-560b-4afd-811b-cf9d3a5ef5d9.png)
+
 # 1. Business Problem.
 
 This project is to meet an insurance company demand that has provided health insurance to its customers and now they need to build a model to predict whether the policyholders (customers) from past year will also be interested in vehicle insurance. With the limited resources to contact the potential customers interested in vehicle insurance it is necessary to build a customers rank to enhance customer adhesion performance. This is a learning to rank project (LTR).
