@@ -28,10 +28,10 @@ def health_insurance_predict():
         pipeline = HealthInsurance()
         
         # data cleaning
-#         df1 = pipeline.data_cleaning( test_raw )
+        df1 = pipeline.data_cleaning( test_raw )
         
         # feature engineering
-        df2 = pipeline.feature_engineering( test_raw )
+        df2 = pipeline.feature_engineering( df1 )
         
         # data preparation
         df3 = pipeline.data_preparation( df2 )
