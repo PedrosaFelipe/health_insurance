@@ -7,7 +7,7 @@ from healthinsurance.HealthInsurance import HealthInsurance
 
 # loading model
 path = '/home/felipepedrosa/projetos/health_insurance/'
-model = pickle.load( open( path + 'src/models/model_training_rf.pkl', 'rb' ) )
+model = pickle.load( open( path + 'src/models/cat_model.pkl', 'rb' ) )
 
 # initialize API
 app = Flask( __name__ )
@@ -38,7 +38,7 @@ def health_insurance_predict():
         
         # prediction
         df_response = pipeline.get_prediction( model, test_raw, df3 )
-        
+         
         return df_response
     
     else:
@@ -46,3 +46,6 @@ def health_insurance_predict():
     
 if __name__ == '__main__':
     app.run( '0.0.0.0', debug=True )
+
+
+    

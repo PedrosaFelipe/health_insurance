@@ -1,5 +1,4 @@
 import pickle
-import numpy  as np
 import pandas as pd
 
 
@@ -75,3 +74,7 @@ class HealthInsurance:
         original_data['prediction'] = pred
         
         return original_data.to_json( orient='records', date_format='iso' )
+
+
+
+        
