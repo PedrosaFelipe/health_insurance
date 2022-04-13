@@ -1,8 +1,6 @@
 import pickle
 import pandas as pd
 
-
-
 class HealthInsurance:
     
     def __init__(self):
@@ -15,6 +13,7 @@ class HealthInsurance:
         self.fe_policy_sales_channel_scaler =  pickle.load( open(self.home_path + 'src/features/fe_policy_sales_channel_scaler.pkl' ,'rb'))
         
     def data_cleaning( self, df1 ):
+
         # 1.1. Rename Columns
         cols_new = ['id', 'gender', 'age', 'driving_license', 'region_code', 'previously_insured', 'vehicle_age', 
                     'vehicle_damage', 'annual_premium', 'policy_sales_channel', 'vintage', 'response']
@@ -26,6 +25,7 @@ class HealthInsurance:
 
     
     def feature_engineering( self, df2 ):
+
         # 2.0. Feature Engineering
 
         # Vehicle Damage Number
@@ -33,11 +33,11 @@ class HealthInsurance:
 
         # Vehicle Age
         df2['vehicle_age'] =  df2['vehicle_age'].apply( lambda x: 2 if x == '> 2 Years' else 1 if x == '1-2 Year' else 0 )
-        
         return df2
     
     
     def data_preparation( self, df51 ):
+
         # anual premium - StandarScaler
         df51['annual_premium'] = self.annual_premium_scaler.transform( df51[['annual_premium']].values )
 
@@ -58,7 +58,7 @@ class HealthInsurance:
 
         # policy_sales_channel - Target Encoding / Frequency Encoding
         df51.loc[:, 'policy_sales_channel'] = df51['policy_sales_channel'].map( self.fe_policy_sales_channel_scaler )
-        
+
         # Feature Selection
         cols_selected = ['annual_premium', 'vintage', 'age', 'region_code', 'vehicle_damage', 'previously_insured',
                          'policy_sales_channel']
@@ -67,14 +67,13 @@ class HealthInsurance:
     
     
     def get_prediction( self, model, original_data, test_data ):
+
         # model prediction
         pred = model.predict_proba( test_data )
         
         # join prediction into original data
-        original_data['prediction'] = pred
+        original_data['score'] = pred[: , 1].tolist()
         
         return original_data.to_json( orient='records', date_format='iso' )
 
 
-
-        

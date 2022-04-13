@@ -13,7 +13,6 @@ model = pickle.load( open( path + 'src/models/cat_model.pkl', 'rb' ) )
 app = Flask( __name__ )
 
 @app.route( '/predict', methods=['POST'] )
-
 def health_insurance_predict():
     test_json = request.get_json()
     
@@ -38,7 +37,7 @@ def health_insurance_predict():
         
         # prediction
         df_response = pipeline.get_prediction( model, test_raw, df3 )
-         
+        
         return df_response
     
     else:
