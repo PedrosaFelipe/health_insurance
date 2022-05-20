@@ -1,79 +1,69 @@
 import pickle
 import pandas as pd
 
-class HealthInsurance:
-    
-    def __init__(self):
-        self.home_path =                      '/home/felipepedrosa/projetos/health_insurance/'
-        self.annual_premium_scaler =           pickle.load( open(self.home_path + 'src/features/annual_premium_scaler.pkl' ,'rb'))
-        self.age_scaler =                      pickle.load( open(self.home_path + 'src/features/age_scaler.pkl', 'rb'))
-        self.vintage_scaler =                  pickle.load( open(self.home_path + 'src/features/vintage_scaler.pkl' ,'rb'))
-        self.target_encode_gender_scaler =     pickle.load( open(self.home_path + 'src/features/target_encode_gender_scaler.pkl' ,'rb'))
-        self.target_encode_region_scaler =     pickle.load( open(self.home_path + 'src/features/target_encode_region_code_scaler.pkl' ,'rb'))
-        self.fe_policy_sales_channel_scaler =  pickle.load( open(self.home_path + 'src/features/fe_policy_sales_channel_scaler.pkl' ,'rb'))
+class HealthInsurance( object ):
+    def __init__ (self):
+
+        #local API test needs abs home_path
+        self.home_path='/home/felipepedrosa/projetos/health_insurance/src/'
+        self.health_annual_paid_scaler        = pickle.load( open( self.home_path + 'features/health_annual_paid_scaler.pkl', 'rb'))
+        self.age_scaler                       = pickle.load( open( self.home_path + 'features/age_scaler.pkl', 'rb'))
+        self.days_assoc_scaler                = pickle.load( open( self.home_path + 'features/days_assoc_scaler.pkl', 'rb'))
+        self.gender_target_encoder            = pickle.load( open( self.home_path + 'features/gender_target_encoder.pkl', 'rb'))
+        self.region_code_target_encoder       = pickle.load( open( self.home_path + 'features/region_code_target_encoder.pkl', 'rb'))
+        self.policy_sales_freq_encoder        = pickle.load( open( self.home_path + 'features/policy_sales_freq_encoder.pkl', 'rb'))
+
         
-    def data_cleaning( self, df1 ):
+    def data_cleaning(self, df1):
 
-        # 1.1. Rename Columns
-        cols_new = ['id', 'gender', 'age', 'driving_license', 'region_code', 'previously_insured', 'vehicle_age', 
-                    'vehicle_damage', 'annual_premium', 'policy_sales_channel', 'vintage', 'response']
+        # Rename Columns
+        cols_new = ['id', 'gender', 'age', 'region_code','policy_sales_channel','driving_license',
+                        'vehicle_age', 'vehicle_damage', 'vehicle_prev_insured', 'health_annual_paid', 'days_associated']
 
-        # rename 
         df1.columns = cols_new
-        
-        return df1 
 
-    
-    def feature_engineering( self, df2 ):
+        return df1
 
-        # 2.0. Feature Engineering
 
-        # Vehicle Damage Number
-        df2['vehicle_damage'] = df2['vehicle_damage'].apply( lambda x: 1 if x == 'Yes' else 0 )
+    def feature_engineering (self, df2):
 
-        # Vehicle Age
-        df2['vehicle_age'] =  df2['vehicle_age'].apply( lambda x: 2 if x == '> 2 Years' else 1 if x == '1-2 Year' else 0 )
+        # vehicle damage
+        dict_vehicle_damage = {'Yes': 1, 'No': 0}
+        df2['vehicle_damage'] = df2['vehicle_damage'].map(dict_vehicle_damage)
+
+        # vehicle_age
+        dict_vehicle_age = {'> 2 Years':'over_2_years', '1-2 Year':'between_1_2_years', '< 1 Year': 'below_1_year' }
+        df2['vehicle_age'] = df2['vehicle_age'].map(dict_vehicle_age)
+
         return df2
-    
-    
-    def data_preparation( self, df51 ):
 
-        # anual premium - StandarScaler
-        df51['annual_premium'] = self.annual_premium_scaler.transform( df51[['annual_premium']].values )
 
-        # Age - MinMaxScaler
-        df51['age'] = self.age_scaler.transform( df51[['age']].values )
+    def data_preparation (self, df3):
 
-        # Vintage - MinMaxScaler
-        df51['vintage'] = self.vintage_scaler.transform( df51[['vintage']].values )
+        # transformations
+        df3['health_annual_paid'] = self.health_annual_paid_scaler.transform( df3[['health_annual_paid']].values )
+        df3['age'] = self.age_scaler.transform( df3[['age']].values )
+        df3['days_associated'] = self.days_assoc_scaler.transform( df3[['days_associated']].values )
+        #df3.loc[:,'gender'] = df3['gender'].map(self.gender_target_encoder) #was not selected
+        df3.loc[:,'region_code'] = df3['region_code'].map(self.region_code_target_encoder)
+        df3.loc[:,'policy_sales_channel'] = df3['policy_sales_channel'].map(self.policy_sales_freq_encoder)
+        #vars 'vehicle_damage' and 'vehicle_prev_insured' didn't have trasnformations.
 
-        # gender - One Hot Encoding / Target Encoding
-        df51.loc[:, 'gender'] = df51['gender'].map( self.target_encode_gender_scaler )
+        # feature Selection
+        cols_selected = ['days_associated','health_annual_paid','age','region_code',
+                            'vehicle_damage','policy_sales_channel', 'vehicle_prev_insured']
+        #cols 'id', 'gender', 'driving_license' and 'vehicle_age' were features not selected.
 
-        # region_code - Target Encoding / Frequency Encoding
-        df51.loc[:, 'region_code'] = df51['region_code'].map( self.target_encode_region_scaler )
+        return df3[cols_selected]
 
-        # vehicle_age - One Hot Encoding / Frequency Encoding
-        df51 = pd.get_dummies( df51, prefix='vehicle_age', columns=['vehicle_age'] )
 
-        # policy_sales_channel - Target Encoding / Frequency Encoding
-        df51.loc[:, 'policy_sales_channel'] = df51['policy_sales_channel'].map( self.fe_policy_sales_channel_scaler )
-
-        # Feature Selection
-        cols_selected = ['annual_premium', 'vintage', 'age', 'region_code', 'vehicle_damage', 'previously_insured',
-                         'policy_sales_channel']
-        
-        return df51[ cols_selected ]
-    
-    
     def get_prediction( self, model, original_data, test_data ):
 
-        # model prediction
+        #model prediction
         pred = model.predict_proba( test_data )
-        
-        # join prediction into original data
-        original_data['score'] = pred[: , 1].tolist()
-        
-        return original_data.to_json( orient='records', date_format='iso' )
 
+        #join prediction into original data and sort
+        original_data['score'] = pred[:, 1].tolist()
+        original_data = original_data.sort_values('score', ascending=False)
 
+        return original_data.to_json( orient= 'records', date_format = 'iso' )
