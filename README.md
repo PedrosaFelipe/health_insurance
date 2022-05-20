@@ -1,102 +1,343 @@
 # **Health_insurance Cross sell predict**
 
-## This project aims to help the company to make a cross-sell, where the model would classify in a rank the most favorable customers, who already have car insurance, and also buy the new life insurance together.
-
+## Projeto de rankeamento de clientes interessados na aquisição de um seguro veicular.
+Contextualização:
+Os dados do projeto foram obtidos do Kaggle, do desafio "Health Insurance Cross Sell Prediction".
+O contexto de negócios é fictício, mas seu planejamento e desenvolvimento seguem todos os passos de um projeto real.
 #### This project was made by Felipe S Pedrosa.
 
 ![image](https://user-images.githubusercontent.com/55566708/151688409-42d21d75-560b-4afd-811b-cf9d3a5ef5d9.png)
 
-# 1. Business Problem.
+## 1. Problema de negócios
 
-This project is to meet an insurance company demand that has provided health insurance to its customers and now they need to build a model to predict whether the policyholders (customers) from past year will also be interested in vehicle insurance. With the limited resources to contact the potential customers interested in vehicle insurance it is necessary to build a customers rank to enhance customer adhesion performance. This is a learning to rank project (LTR).
+### 1.1 Problema
+A Insurance All é uma empresa tradicional de seguros de saúde.
+Através de uma pesquisa, ela obteve retorno de 304 mil clientes sobre o interesse em adquirir um seguro veicular. O novo seguro foi desenvolvido, e está sendo ofertado aos interessados.
+Porém existem mais 76 mil clientes, entre novos e antigos, que não responderam a pesquisa.
+O call center já bastante atarefado, tem capacidade de contatar apenas 20 mil destes clientes potenciais.
+Logo, precisa de uma lista ordenada por interesse destes 76 mil clientes, a fim de otimizar a conversão e o faturamento da empresa.
+
+### 1.2 Objetivo
+A partir dos dados de interesse em seguro veicular dos 304 mil clientes, construtir um ranking por ordem de interesse (propensão de compra) dos 76 mil potenciais clientes.
+As seguintes questões de negócio devem ser respondidas ao gestor do call center:
+
+Quais são os principais insights sobre os atributos mais relevantes de clientes interessados em seguro veicular?
+Qual a porcentagem de clientes interessados em seguro veicular, o call center conseguirá contatar fazendo 20 mil ligações?
+Se a capacidade do call center aumentar para 40 mil ligações, qual a porcentagem de clientes interessados em adquirir um seguro veicular o call center conseguirá contatar?
+Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
 
 
-# 2. Business Assumptions.
+## 2. Premissas de negócio
 
-The Marketing Manager stated that they are only able to offer adequate treatment during sales campaign - including calls, invitations for conversations in person and special attention to clarify doubts - up to 40% of last year's health insurance policyholders.
-Therefore, the company wants to obtain an ordered list of customers most likely to purchase vehicle insurance to maximize customer conversion.
+O time de vendas já utiliza o Google Sheets como ferramenta corporativa. É preciso que o ranking de propensão de compra seja incorporado nele.
 
-# 3. Solution Strategy
 
-When each customer signed up for health insurance during last year, they also completed a survey with relevant data to a car insurance decision-making, such as ownership of a driver's license, vehicle age, wheter the customer got his/ her vehicle damaged in the past, among other information.
-The result of this survey will guide the creation of a machine learning model that will produce an ordered list of customers most likely to acquire a car insurance.
-The strategy to solve this challenge was:
+## 3. Planejamento da solução
 
- **Step 01. Data description**
+### 3.1. Produto final
+O que será entregue efetivamente?
 
-The first step was to collect the data which were at a postgreSQL database in the AWS Cloud and understand the data.
-There are 304887 customers records, containing different attributes such as: "gender", "age", "driving license", "vehicle age", "policy sales channel", among others; these data show the customer's final interest in taking out car insurance, based on past experiences.
-Important to mention that 20% of data were extracted (randomly, but stratified by response) for further testing of the final model.
+Uma funcionalidade dentro da ferramenta Google Sheets, que ordena os 76 mil clientes (ou quaisquer novos clientes inclusos na planilha) por propensão de compra.
 
-**Step 02. Feature engineering**
 
-The responses of the "vehicle age" feature were changed to the snake_case pattern (for later one hot encoding) and the responses of the "vehicle damage" feature were also changed: the originals "Yes" and "No" by 1 and 0, respectively.
+### 3.2. Ferramentas
+Quais ferramentas serão usadas no processo?
 
-**Step 03. Data filtering:**
+Python 3.8.12;
+Jupyter Notebook;
+Git, Github e Gitlab;
+Coggle Mindmaps;
+SweetViz;
+Heroku Cloud;
+Algoritmos de Regressão e Classificação;
+Pacotes de Machine Learning sklearn e xgboost;
+Técnicas de Seleção de Atributos;
+Flask e Python API's;
+Google Sheets Apps Script.
 
-Soon after, the check for missing values and outliers took place.
 
-**Step 04. Exploratory data analysis**
+### 3.3 Processo
 
-With the help of SweetViz, the first exploratory data analysis was carried out to bring up some relevant insights.
-Furthermore, specific analyzes were also carried out to understand the influence of some features on the customer's final decision to acquire a vehicle insurance.
+#### 3.3.1 Estratégia de solução
+Com base no objetivo do projeto, trata-se portanto de um projeto de Learning to Rank (LTR).
+Minha estratégia para resolver esse desafio, baseado na metodologia CRISP-DS, é detalhada pelo plano abaixo:
+Step 01. Data Description:
 
-**Step 05. Data preparation**
+Coletar dados em um banco de dados na AWS Cloud.
+Compreender o significado de cada atributo dos interessados.
+Renomear colunas, compreender dimensões e tipos dos dados.
+Identificar e tratar dados nulos.
+Analisar atributos através de estatística descritiva.
+Separar 20% dos dados para teste (aleatoriamente, mas estratificados pela variável resposta).
 
-After analyzing the data, standard and minmax scalers were applied, in addition to target and frequency encoders for some features. All details are available on the notebook.
+## Step 02. Feature Engineering:
 
-**Step 06. Feature selection**
+Criar mindmap de hipóteses de negócio.
+Realizar a feature engeneering, criando as features necessárias para validação das hipóteses.
 
-The next step was to identify the most relevant features for training machine learning models. For this, in addition to the knowledge acquired during EDA, the Python implementations of the Boruta R package (https://github.com/scikit-learn-contrib/boruta_py) was used.
-The features chosen by Boruta are described in the notebook.
+## Step 03. Data Filtering:
 
-**Step 07. Machine learning modelling**
+Filtrar registros e atributos de acordo com restrições de negócio.
 
-Different machine learning algorithms were evaluated and tested with cross-validation, with different hyperparameters each: balanced random forest classifier, knn classifier,logistic regression, random forest classifier and xgboost classifier; each of the studied algorithms is present in a separate notebook.
-The "predict_proba" method (the probabilities for the target) was used to sort the customer's list and plot the cumulative gains and lift curves.
-Finally, **precision@k** and **recall@k** (in this case, k = 10%, 20%, 30% and 40%) metrics were used to quantify the performance of the models and to choose the better one.
+## Step 04. Exploratory Data Analysis:
 
-- The **precision@k** is the proportion of recommended items in the top-k set that are relevant, where k is the number (or percentage, in this case) of rows of the class 1 (those that are intereseted in vehicle insurance) in the sorted probability table.
-- he **recall@k** is the proportion of relevant items found in the top-k recommendations.
+Realizar uma análise univariada com uso do SweetViz, avaliando detalhes de cada atributo.
+Realizar uma análise bivariada, validando as hipótestes criadas e gerando insights de negócio.
+Criar tabela de resultados das hipóteses, e relevância estimada dos atributos para o aprendizado dos modelos.
 
-**Step 08. Hyperparameter fine tunning**
+## Step 05. Data Preparation:
 
-The best model was the xgboost classifier. For this business problem, no significant performance gains were verified after the fine tuning of hyperparameters.
+Padronizar atributos numéricos com distribuição normal.
+Reescalar atributos numéricos com distribuição não normal.
+Codificar atributos categóricos em atributos numéricos.
+Aplicas as transformações acima aos dados de teste.
 
-**Step 09. Convert model performance to business values**
+## Step 06. Feature Selection:
 
-The manager was given an ordered list of customers most likely to purchase vehicle insurance. When contacting the top 40% of the list, it is expected that there will be a conversion of at least 90% of the total interested in the product.
+Separar dados de treino e validação.
+Rodar algoritmo para obter sugestão de atributos relevantes.
+Analisar o resultado em conjunto com os atributos relevantes estimado na EDA.
+Selecionar apenas os melhores atributos para treinar os modelos de machine learning.
 
-**Step 10. Deploy model to production**
+## Step 07. Machine Learning Modelling:
 
-To facilitate the use of the model and allow the ordering of new customer lists, the model was deployed on google sheets. When entering customer data and pressing the appropriate button, the tool displays the propensity score while sorting the list by this value. From this moment on, it is up to the company to contact as many customers as it wants to try to sell vehicle insurance, but always with the expectation that, by reaching the top 40% of the list, 90% of potential customers will be covered.
 
-# 4. Top 3 Data Insights
+Rodar algoritmos: KNN classifier, Logistic regression, ExtraTrees classifier, e XGBboost classifier.
 
-**Hypothesis 01:**
 
-**True/False.**
+Plotar curva de ganho cumulativo e lift, e calcular precison@k/recall@k de cada modelo.
 
-**Hypothesis 02:**
 
-**True/False.**
+Criar tabela de performance comparando precison@k/recall@k de cada modelo.
 
-**Hypothesis 03:**
 
-**True/False.**
+## Step 08. Hyperparameter Fine Tunning:
 
-# 5. Machine Learning Model Applied
+Fazer um ajuste fino de hiperparâmetros em cada modelo, identificando o melhor conjunto de parâmetros para maximizar suas capacidades de aprendizagem.
+Aplicar validação cruzada em cada modelo, reduzindo o viés de seleção (teoria da amostragem), por utilizar várias amostras diferentes dos dados.
+Selecionar os 4 modelos com melhor conjunto de hiperparâmetros, e avaliar sua capacidade de aprendizagem.
+Plotar curvas de ganho cumulativo e lift, comparando os 4 modelos.
+Calcular precison@k/recall@k dos 4 modelos, e selecionar o de melhor performance.
+Submeter esse modelo aos dados de teste, e plotar suas curvas de ganho cumulativo e lift.
+Comparar precison@k/recall@k em treino vs. teste, avaliando a capacidade de generalização do modelo (aprendizado com dados inéditos).
 
-# 6. Machine Learning Modelo Performance
+## Step 09. Convert Model Performance to Business Values:
 
-# 7. Business Results
+Responder as questões de negócio do gestor ao call center.
+Comprarar resultados da lista aleatória com a lista ordenada por propensão de compra.
+Traduzir a performance do modelo em resultados financeiros para a Insurance All.
 
-# 8. Conclusions
+## Step 10. Deploy Modelo to Production:
 
-# 9. Lessons Learned
+Criar as classes para publicação em produção.
+Testar as classes localmente.
+Publicar modelo no Heroku Cloud.
+Criar App Script em Google Sheets para consultar o modelo em produção.
+Implementar botão que consulta a propensão de compra dos clientes no Google Sheets, e testar a solução.
 
-# 10. Next Steps to Improve
 
-# LICENSE
+## 4. Os 3 principais insights dos dados
+Durante a análise exploratória de dados, foram gerados insights ao time de negócio, através da validação das hipóteses.
+Insights são informações novas, ou que contrapõe crenças até então estabelecidas do time de negócios. São também acionáveis, possibilitando ação para direcionar resultados futuros.
 
-# All Rights Reserved - Comunidade DS 2021
+### H1 - O interesse é maior em clientes com idade maior.
+
+**Hipótese falsa.** Pode ser observado que clientes entre 40-45 anos são os mais interessados em seguro veicular.
+
+**Insight de negócio:** Utilizar o conhecimento da faixa etária mais interessada em campanhas de marketing direcionadas.
+
+
+### H2 - O interesse é maior em clientes que possuem veículos mais novos.
+
+**Hipótese falsa**. Quando mais velho o veículo, maior é o interesse em seguro veicular:
+
+4% dos clientes com veículos abaixo de 1 ano possuem interesse.
+17% dos clientes com veículos entre 1 e 2 anos possuem interesse.
+29% dos clientes com veículos com mais de 2 anos possuem interesse.
+
+
+**Insight de negócio:** Buscar dados de acionamento de seguro por clientes com veículos mais velhos, a fim de validar esta possível correlação. Havendo correlação, avaliar necessidade de reajustes no preço dos seguro ofertados a estes clientes.
+
+
+### H3 - O interesse é maior em clientes que possuíam seu veículo previamente segurado.
+
+**Hipótese falsa.** 22% dos clientes que não possuíam veículo previamente segurado estão interessados em seguro de veículo, enquanto apenas 1% dos clientes que possuíam seguro tem interesse.
+
+**Insight de negócio:** Obter informações sobre as condições dos seguros dos clientes que possuem seguro e não possuem interesse, realizando um benchmarking entre a oferta da Insurance All e a da concorrência, visando tornar-se mais atrativo a eles.
+
+
+## 5. Modelo de Machine Learning aplicado
+Na curva de ganho abaixo, são exibidos os 4 modelos com as melhores configurações de hiperparâmetros.
+Também é exibido o modelo perfeito, que ordenaria todos os interessados em sequência no topo da lista.
+Pro fim, o modelo de base é também exibido, representando a lista aleatória desordenada.
+Curva de Ganhos Acumulados: ordenada por probabilidade de compra, cruza o percentual da base de clientes com o percentual de clientes propensos a comprar.
+Ex: 40% da base de clientes (x), ordenada pela probabilidade de compra (y), contém 80% de todos os interessados em seguro veicular.
+
+Na curva lift abaixo, os 4 modelos somados ao modelo perfeito e o baseline também são exibidos.
+Lift Curve: representa a diferença entre a curva de ganho e a lista aleatória. Portanto, informa o quanto o modelo é melhor que lista aleatória.
+Ex: Abrangendo 40% da lista ordenada, o modelo é 2,2 vezes melhor que a lista aleatória.
+
+Nas tabelas abaixo, precision@k e recall@k são exibidas para os diferentes modelos selecionados.
+Precision@k: conta quantas previsões foram corretas até k e divide por todas as previsões feitas até k.
+Ex: Precisão top 40% (ou 12196) k = 0,25 - Significa que em 40% da base, o modelo acertou 25% em relação ao modelo perfeito, que acertaria 60% no top 40%, sendo que depois de 12%, já capturou todos os interessados, e passaria a capturar apenas não interessados.
+
+
+
+Precision@
+K-nearest neighbors
+Logistic regression
+Extra Trees classifier
+Xgboost classifier
+Perfect model
+
+
+
+
+10% (3049)
+0.32
+0.29
+0.37
+0.39
+1
+
+
+20% (6098)
+0.30
+0.29
+0.35
+0.35
+0.61
+
+
+30% (9147)
+0.29
+0.28
+0.32
+0.32
+0.41
+
+
+40% (12196)
+0.26
+0.27
+0.28
+0.28
+0.31
+
+
+
+Recall@k: conta quantas previsões foram corretas até k e divide por todos os exemplos verdadeiros.
+Ex: Recall top 40% (ou 12196) k = 0,8 - Significa que 80% do total de clientes interessados aparecem nos top 40% resultados da lista ordenada.
+
+
+
+Recall@
+K-nearest neighbors
+Logistic regression
+Extra Trees classifier
+Xgboost classifier
+Perfect m
+
+
+
+O melhor modelo portanto foi o XGBoost Classifier, e por isso foi eleito para deploy em produção.
+
+## 6. Performance do modelo de Machine Learning
+Com o uso dos dados de teste (dados inéditos), é feita a simulação de performance do modelo em ambiente de produção.
+As curvas de ganho cumulativo e lift dos dados de teste são apresentadas abaixo.
+
+![image](https://user-images.githubusercontent.com/55566708/166093801-268f1340-23fa-414d-a604-9428fec5d1c1.png)
+
+Na sequência, as duas tabelas demonstram os valores de precision@k e recall@k do XGBoost.
+É possível observar que comparando-se o modelo de treino e validação com o modelo de teste, as métricas permaneceram muito parecidas.
+
+| Precision@  | Xgboost classifier (train)  | Xgboost classifier (test)  | 
+|-------------|-----------------------------|----------------------------|
+|     10%     |             0.39            |             0.39           |   
+|     20%     |             0.39            |             0.39           |   
+|     30%     |             0.39            |             0.39           |   
+|     40%     |             0.39            |             0.39           |  
+
+
+
+
+
+
+| Recall@     | Xgboost classifier (train)  | Xgboost classifier (test)  | 
+|-------------|-----------------------------|----------------------------|
+|     10%     |             0.39            |             0.39           |   
+|     20%     |             0.39            |             0.39           |   
+|     30%     |             0.39            |             0.39           |   
+|     40%     |             0.39            |             0.39           | 
+
+Isto evidencia que o modelo tem uma boa capacidade de generalização, ou seja, é capaz de aprender com dados nunca antes vistos.
+
+## 7. Resultados de Negócio
+Dos 76.220 clientes, 9.340 estão interessados em seguros de veículos. (12,25% do total)
+O ticket médio para um seguro de saúde anual da Insurance All é: $ 31669.
+Vamos assumir todos os clientes interessados no seguro veicular irão assinar o contrato, e que o valor médio do seguro do veículos será o mesmo do seguro saúde.
+As questões de negócios abaixo serão respondidas com base nas premissas citadas.
+
+Qual a porcentagem de clientes interessados em seguro veicular, o call center conseguirá contatar fazendo 20 mil ligações?
+
+Pela lista aleatória:
+
+A equipe de vendas contata 26% dos interessados em seguro veicular: 2.451 clientes (ver Ganho: cruzamento linha preta x verde).
+==> **Receita estimada:** 2.451 * 31.669 = US$ 77,62 milhões por ano.
+
+Pela lista ordenada (modelo):
+
+A equipe de vendas contata 70% dos interessados em seguro veicular: 6.576 clientes (ver Ganho: cruzamento linha azul x verde).
+==> **Receita estimada:** 6.576 * 31.669 = US$ 208,26 milhões por ano.
+
+RESULTADO: O modelo é 2,68 vezes melhor que a lista aleatória (ver Lift: linha azul x verde).
+Portanto, a receita estimada é 2,68 vezes maior que a lista aleatória: US$ 130,63 milhões.
+
+Se a capacidade do call center aumentar para 40 mil ligações, qual a porcentagem de clientes interessados em adquirir um seguro veicular o call center conseguirá contatar?
+
+Pela lista aleatória:
+
+A equipe de vendas contata 52% dos interessados em seguro veicular: 4902 clientes (ver Ganho: cruzamento linha preta x verde).
+==> **Receita estimada** = 4902 * 31669 = US$ 155,24 milhões por ano.
+
+Pela lista ordenada (modelo):
+
+A equipe de vendas contata 99,5% dos interessados em seguro veicular: 9.294 clientes (ver Ganho: cruzamento linha azul x verde).
+==> **Receita estimada:** 9.291 * 31.669 = US$ 294,24 milhões por ano.
+
+**RESULTADO**: O modelo é 1,9 vezes melhor que a lista aleatória (ver Lift: cruzamento linha azul x verde).
+Portanto, a receita estimada é 1,9 vezes maior que a lista aleatória: US$ 139 milhões.
+
+Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
+
+Pela lista aleatória:
+
+A equipe de vendas precisa fazer 60.976 ligações, para entrar em contato com 80% dos clientes da lista, então atingirá 80% dos interessados em seguro veicular.
+
+Pela lista ordenada (modelo):
+
+A equipe de vendas precisa fazer 23.800 ligações, para entrar em contato com 31% dos clientes da lista, então atingirá 80% dos interessados em seguro veicular (ver Ganho: cruzamento linha azul x verde).
+
+**RESULTADO** : Fazendo 23800 ligações, o modelo é 2,6 vezes melhor que a lista aleatória. (ver Lift: cruzamento linha azul x verde).
+
+Planilha funcional em Google Sheets
+
+Acesso a planilha: Google Sheets - Health Insurance Ranking
+
+## 8. Conclusões
+Com base nos resultados de negócio, conclui-se que o objetivo do projeto foi acançado.
+Com a solução de dados entregue, a Insurance All possui agora uma vantagem competitiva frente aos seus concorrentes, reduzindo o custo de aquisição de clientes, e aumentando o seu faturamento.
+Pelo fato da solução implementada via planilha poder ser utilizada para novos clientes que ainda nem foram consquistados, é esperado um incremento ainda maior no faturamento esperado.
+É possível ainda aproveitar a solução para simular perfis de clientes, funcionalidade que é de grande valia para a empresa.
+
+## 9. Melhorias futuras
+
+Criar mais atributos a partir dos já existentes, buscando gerar mais insumos para o aprendizado dos modelos.
+Utilizar mais de um método de seleção de atributos, incluindo o Boruta ou o RFECV por exemplo.
+Utilizar o Optuna no hyperparameter fine tunning, visando otimizar os modelos.
+
+
+## 10 Referências
+
+O Dataset foi obtido no Kaggle.
+A imagem utilizada é de uso livre e foi obtida no Pexels.
