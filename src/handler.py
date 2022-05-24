@@ -5,7 +5,7 @@ from flask import Flask, request, Response
 from healthinsurance.HealthInsurance import HealthInsurance
 
 # load model in memory
-model = pickle.load(open('src/models/xgbclassifier_model.pkl', 'rb'))
+model = pickle.load(open('models/xgbclassifier_model.pkl', 'rb'))
 
 
 # initialize API

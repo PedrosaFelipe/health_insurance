@@ -5,7 +5,7 @@ class HealthInsurance( object ):
     def __init__ (self):
 
         #local API test needs abs home_path
-        self.home_path='/home/felipepedrosa/projetos/health_insurance/src/'
+        self.home_path=''
         self.health_annual_paid_scaler        = pickle.load( open( self.home_path + 'features/health_annual_paid_scaler.pkl', 'rb'))
         self.age_scaler                       = pickle.load( open( self.home_path + 'features/age_scaler.pkl', 'rb'))
         self.days_assoc_scaler                = pickle.load( open( self.home_path + 'features/days_assoc_scaler.pkl', 'rb'))
