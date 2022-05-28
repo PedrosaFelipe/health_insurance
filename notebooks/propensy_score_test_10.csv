@@ -1,0 +1,11 @@
+,id,gender,age,region_code,policy_sales_channel,driving_license,vehicle_age,vehicle_damage,vehicle_prev_insured,health_annual_paid,days_associated
+22900,182746,Male,52,28,26,1,> 2 Years,Yes,0,26377.0,251
+92397,356446,Female,41,22,124,1,1-2 Year,Yes,0,30605.0,282
+113548,144160,Male,24,3,152,1,< 1 Year,No,1,46855.0,284
+260408,175356,Female,23,29,152,1,< 1 Year,Yes,0,26772.0,93
+230094,313154,Male,25,46,152,1,< 1 Year,No,1,25703.0,25
+363031,237337,Male,26,35,152,1,< 1 Year,No,1,65350.0,64
+234010,343976,Male,60,8,26,1,1-2 Year,Yes,1,58851.0,268
+364270,247396,Female,20,30,160,1,< 1 Year,No,1,29164.0,15
+213609,181574,Male,36,49,152,1,1-2 Year,Yes,0,51035.0,293
+156177,104592,Female,45,28,124,1,1-2 Year,Yes,0,43550.0,282
