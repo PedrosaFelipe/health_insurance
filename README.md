@@ -185,44 +185,18 @@ Ex: Precisão top 40% (ou 12196) k = 0,25 - Significa que em 40% da base, o mode
 
 Precision@
 K-nearest neighbors
-Logistic regression
+Catboost
 Extra Trees classifier
 Xgboost classifier
 Perfect model
 
+|     Precision@      |     K-nearest neighbors     |           Catboost         |  Extra Trees classifier  |    Xgboost classifier   | Perfect model |
+|---------------------|-----------------------------|----------------------------|--------------------------|-------------------------|---------------|
+|     10% (3049)      |             0.32            |             0.29           |           0.37           |           0.37          |       1       |
+|     20% (6098)      |             0.29            |             0.39           |           0.37           |           0.37          |       0.37    |
+|     30% (9147)      |             0.37            |             0.39           |           0.37           |           0.37          |       0.37    |
+|     40% (12196)     |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
 
-
-
-10% (3049)
-0.32
-0.29
-0.37
-0.39
-1
-
-
-20% (6098)
-0.30
-0.29
-0.35
-0.35
-0.61
-
-
-30% (9147)
-0.29
-0.28
-0.32
-0.32
-0.41
-
-
-40% (12196)
-0.26
-0.27
-0.28
-0.28
-0.31
 
 
 
@@ -231,13 +205,12 @@ Ex: Recall top 40% (ou 12196) k = 0,8 - Significa que 80% do total de clientes i
 
 
 
-Recall@
-K-nearest neighbors
-Logistic regression
-Extra Trees classifier
-Xgboost classifier
-Perfect m
-
+|       Recall@       |     K-nearest neighbors     |           Catboost         |  Extra Trees classifier  |    Xgboost classifier   | Perfect model |
+|---------------------|-----------------------------|----------------------------|--------------------------|-------------------------|---------------|
+|     10% (3049)      |             0.32            |             0.29           |           0.37           |           0.37          |       1       |
+|     20% (6098)      |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
+|     30% (9147)      |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
+|     40% (12196)     |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
 
 
 O melhor modelo portanto foi o XGBoost Classifier, e por isso foi eleito para deploy em produção.
@@ -290,6 +263,9 @@ Pela lista ordenada (modelo):
 A equipe de vendas contata 70% dos interessados em seguro veicular: 6.576 clientes (ver Ganho: cruzamento linha azul x verde).
 ==> **Receita estimada:** 6.576 * 31.669 = US$ 208,26 milhões por ano.
 
+![download](https://user-images.githubusercontent.com/55566708/171787866-dcc5b618-278d-4e93-8588-df2db493143c.png)
+
+
 RESULTADO: O modelo é 2,68 vezes melhor que a lista aleatória (ver Lift: linha azul x verde).
 Portanto, a receita estimada é 2,68 vezes maior que a lista aleatória: US$ 130,63 milhões.
 
@@ -323,6 +299,9 @@ A equipe de vendas precisa fazer 23.800 ligações, para entrar em contato com 3
 Planilha funcional em Google Sheets
 
 Acesso a planilha: Google Sheets - Health Insurance Ranking
+
+https://user-images.githubusercontent.com/55566708/171785822-861f3239-54ef-4feb-b1fc-372703a98604.mp4
+
 
 ## 8. Conclusões
 Com base nos resultados de negócio, conclui-se que o objetivo do projeto foi acançado.
