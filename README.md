@@ -127,7 +127,7 @@ Responder as questões de negócio do gestor ao call center.
 Comprarar resultados da lista aleatória com a lista ordenada por propensão de compra.
 Traduzir a performance do modelo em resultados financeiros para a Insurance All.
 
-## Step 10. Deploy Modelo to Production:
+## **Step 10. Deploy Modelo to Production:**
 
 Criar as classes para publicação em produção.
 Testar as classes localmente.
@@ -144,6 +144,9 @@ Insights são informações novas, ou que contrapõe crenças até então estabe
 
 **Hipótese falsa.** Pode ser observado que clientes entre 40-45 anos são os mais interessados em seguro veicular.
 
+![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68315f6167652e706e673f7261773d74727565](https://user-images.githubusercontent.com/55566708/171983756-a5604bc0-b097-4a20-a3b5-da5526bf48c8.png)
+
+
 **Insight de negócio:** Utilizar o conhecimento da faixa etária mais interessada em campanhas de marketing direcionadas.
 
 
@@ -155,6 +158,8 @@ Insights são informações novas, ou que contrapõe crenças até então estabe
 17% dos clientes com veículos entre 1 e 2 anos possuem interesse.
 29% dos clientes com veículos com mais de 2 anos possuem interesse.
 
+![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68325f76656869636c655f6167652e7](https://user-images.githubusercontent.com/55566708/171983732-f2dbfe6c-1a68-46be-98f1-8796bebe4672.png)
+
 
 **Insight de negócio:** Buscar dados de acionamento de seguro por clientes com veículos mais velhos, a fim de validar esta possível correlação. Havendo correlação, avaliar necessidade de reajustes no preço dos seguro ofertados a estes clientes.
 
@@ -163,7 +168,10 @@ Insights são informações novas, ou que contrapõe crenças até então estabe
 
 **Hipótese falsa.** 22% dos clientes que não possuíam veículo previamente segurado estão interessados em seguro de veículo, enquanto apenas 1% dos clientes que possuíam seguro tem interesse.
 
+![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68335f707265765f696e73757265642](https://user-images.githubusercontent.com/55566708/171983715-b79e497a-f091-4f71-843d-cf1b8b238e7c.png)
+
 **Insight de negócio:** Obter informações sobre as condições dos seguros dos clientes que possuem seguro e não possuem interesse, realizando um benchmarking entre a oferta da Insurance All e a da concorrência, visando tornar-se mais atrativo a eles.
+
 
 
 ## 5. Modelo de Machine Learning aplicado
@@ -192,10 +200,10 @@ Perfect model
 
 |     Precision@      |     K-nearest neighbors     |           Catboost         |  Extra Trees classifier  |    Xgboost classifier   | Perfect model |
 |---------------------|-----------------------------|----------------------------|--------------------------|-------------------------|---------------|
-|     10% (3049)      |             0.32            |             0.29           |           0.37           |           0.37          |       1       |
-|     20% (6098)      |             0.29            |             0.39           |           0.37           |           0.37          |       0.37    |
-|     30% (9147)      |             0.37            |             0.39           |           0.37           |           0.37          |       0.37    |
-|     40% (12196)     |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
+|     10% (3049)      |             0.49            |             0.47           |           1              |           0.39          |       1       |
+|     20% (6098)      |             0.41            |             0.39           |           0.61           |           0.35          |       0.37    |
+|     30% (9147)      |             0.35            |             0.34           |           0.41           |           0.32          |       0.37    |
+|     40% (12196)     |             0.29            |             0.29           |           0.31           |           0.28          |       0.37    |
 
 
 
@@ -207,10 +215,10 @@ Ex: Recall top 40% (ou 12196) k = 0,8 - Significa que 80% do total de clientes i
 
 |       Recall@       |     K-nearest neighbors     |           Catboost         |  Extra Trees classifier  |    Xgboost classifier   | Perfect model |
 |---------------------|-----------------------------|----------------------------|--------------------------|-------------------------|---------------|
-|     10% (3049)      |             0.32            |             0.29           |           0.37           |           0.37          |       1       |
-|     20% (6098)      |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
-|     30% (9147)      |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
-|     40% (12196)     |             0.39            |             0.39           |           0.37           |           0.37          |       0.37    |
+|     10% (3049)      |             0.40            |             0.38           |           0.82           |           0.32          |       1       |
+|     20% (6098)      |             0.67            |             0.64           |           1              |           0.57          |       0.37    |
+|     30% (9147)      |             0.86            |             0.82           |           1              |           0.77          |       0.37    |
+|     40% (12196)     |             0.96            |             0.94           |           1              |           0.92          |       0.37    |
 
 
 O melhor modelo portanto foi o XGBoost Classifier, e por isso foi eleito para deploy em produção.
