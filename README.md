@@ -3,6 +3,9 @@
 ## Projeto de rankeamento de clientes interessados na aquisição de um seguro veicular.
 Contextualização:
 Os dados do projeto foram obtidos do Kaggle, do desafio "Health Insurance Cross Sell Prediction".
+
+
+
 O contexto de negócios é fictício, mas seu planejamento e desenvolvimento seguem todos os passos de um projeto real.
 #### This project was made by Felipe S Pedrosa.
 
@@ -13,6 +16,7 @@ O contexto de negócios é fictício, mas seu planejamento e desenvolvimento seg
 ### 1.1 Problema
 A Insurance All é uma empresa tradicional de seguros de saúde.
 Através de uma pesquisa, ela obteve retorno de 304 mil clientes sobre o interesse em adquirir um seguro veicular. O novo seguro foi desenvolvido, e está sendo ofertado aos interessados.
+
 Porém existem mais 76 mil clientes, entre novos e antigos, que não responderam a pesquisa.
 O call center já bastante atarefado, tem capacidade de contatar apenas 20 mil destes clientes potenciais.
 Logo, precisa de uma lista ordenada por interesse destes 76 mil clientes, a fim de otimizar a conversão e o faturamento da empresa.
@@ -21,10 +25,10 @@ Logo, precisa de uma lista ordenada por interesse destes 76 mil clientes, a fim 
 A partir dos dados de interesse em seguro veicular dos 304 mil clientes, construtir um ranking por ordem de interesse (propensão de compra) dos 76 mil potenciais clientes.
 As seguintes questões de negócio devem ser respondidas ao gestor do call center:
 
-Quais são os principais insights sobre os atributos mais relevantes de clientes interessados em seguro veicular?
-Qual a porcentagem de clientes interessados em seguro veicular, o call center conseguirá contatar fazendo 20 mil ligações?
-Se a capacidade do call center aumentar para 40 mil ligações, qual a porcentagem de clientes interessados em adquirir um seguro veicular o call center conseguirá contatar?
-Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
+- Quais são os principais insights sobre os atributos mais relevantes de clientes interessados em seguro veicular?
+- Qual a porcentagem de clientes interessados em seguro veicular, o call center conseguirá contatar fazendo 20 mil ligações?
+- Se a capacidade do call center aumentar para 40 mil ligações, qual a porcentagem de clientes interessados em adquirir um seguro veicular o call center conseguirá contatar?
+- Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
 
 
 ## 2. Premissas de negócio
@@ -37,23 +41,23 @@ O time de vendas já utiliza o Google Sheets como ferramenta corporativa. É pre
 ### 3.1. Produto final
 O que será entregue efetivamente?
 
-Uma funcionalidade dentro da ferramenta Google Sheets, que ordena os 76 mil clientes (ou quaisquer novos clientes inclusos na planilha) por propensão de compra.
+- Uma funcionalidade dentro da ferramenta Google Sheets, que ordena os 76 mil clientes (ou quaisquer novos clientes inclusos na planilha) por propensão de compra.
 
 
 ### 3.2. Ferramentas
 Quais ferramentas serão usadas no processo?
 
-Python 3.8.12;
-Jupyter Notebook;
-Git, Github e Gitlab;
-Coggle Mindmaps;
-SweetViz;
-Heroku Cloud;
-Algoritmos de Regressão e Classificação;
-Pacotes de Machine Learning sklearn e xgboost;
-Técnicas de Seleção de Atributos;
-Flask e Python API's;
-Google Sheets Apps Script.
+- Python 3.8.12;
+- Jupyter Notebook;
+- Git, Github e Gitlab;
+- Coggle Mindmaps;
+- SweetViz;
+- Heroku Cloud;
+- Algoritmos de Regressão e Classificação;
+- Pacotes de Machine Learning sklearn e xgboost;
+- Técnicas de Seleção de Atributos;
+- Flask e Python API's;
+- Google Sheets Apps Script.
 
 
 ### 3.3 Processo
@@ -61,79 +65,76 @@ Google Sheets Apps Script.
 #### 3.3.1 Estratégia de solução
 Com base no objetivo do projeto, trata-se portanto de um projeto de Learning to Rank (LTR).
 Minha estratégia para resolver esse desafio, baseado na metodologia CRISP-DS, é detalhada pelo plano abaixo:
-Step 01. Data Description:
 
-Coletar dados em um banco de dados na AWS Cloud.
-Compreender o significado de cada atributo dos interessados.
-Renomear colunas, compreender dimensões e tipos dos dados.
-Identificar e tratar dados nulos.
-Analisar atributos através de estatística descritiva.
-Separar 20% dos dados para teste (aleatoriamente, mas estratificados pela variável resposta).
+## Step 01. Data Description: 
+
+- Coletar dados em um banco de dados na AWS Cloud.
+- Compreender o significado de cada atributo dos interessados.
+- Renomear colunas, compreender dimensões e tipos dos dados.
+- Identificar e tratar dados nulos.
+- Analisar atributos através de estatística descritiva.
+- Separar 20% dos dados para teste (aleatoriamente, mas estratificados pela variável resposta).
 
 ## Step 02. Feature Engineering:
 
-Criar mindmap de hipóteses de negócio.
-Realizar a feature engeneering, criando as features necessárias para validação das hipóteses.
+- Criar mindmap de hipóteses de negócio.
+- Realizar a feature engeneering, criando as features necessárias para validação das hipóteses.
 
 ## Step 03. Data Filtering:
 
-Filtrar registros e atributos de acordo com restrições de negócio.
+- Filtrar registros e atributos de acordo com restrições de negócio.
 
 ## Step 04. Exploratory Data Analysis:
 
-Realizar uma análise univariada com uso do SweetViz, avaliando detalhes de cada atributo.
-Realizar uma análise bivariada, validando as hipótestes criadas e gerando insights de negócio.
-Criar tabela de resultados das hipóteses, e relevância estimada dos atributos para o aprendizado dos modelos.
+- Realizar uma análise univariada com uso do SweetViz, avaliando detalhes de cada atributo.
+- Realizar uma análise bivariada, validando as hipótestes criadas e gerando insights de negócio.
+- Criar tabela de resultados das hipóteses, e relevância estimada dos atributos para o aprendizado dos modelos.
 
 ## Step 05. Data Preparation:
 
-Padronizar atributos numéricos com distribuição normal.
-Reescalar atributos numéricos com distribuição não normal.
-Codificar atributos categóricos em atributos numéricos.
-Aplicas as transformações acima aos dados de teste.
+- Padronizar atributos numéricos com distribuição normal.
+- Reescalar atributos numéricos com distribuição não normal.
+- Codificar atributos categóricos em atributos numéricos.
+- Aplicas as transformações acima aos dados de teste.
 
 ## Step 06. Feature Selection:
 
-Separar dados de treino e validação.
-Rodar algoritmo para obter sugestão de atributos relevantes.
-Analisar o resultado em conjunto com os atributos relevantes estimado na EDA.
-Selecionar apenas os melhores atributos para treinar os modelos de machine learning.
+- Separar dados de treino e validação.
+- Rodar algoritmo para obter sugestão de atributos relevantes.
+- Analisar o resultado em conjunto com os atributos relevantes estimado na EDA.
+- Selecionar apenas os melhores atributos para treinar os modelos de machine learning.
 
 ## Step 07. Machine Learning Modelling:
 
 
-Rodar algoritmos: KNN classifier, Logistic regression, ExtraTrees classifier, e XGBboost classifier.
-
-
-Plotar curva de ganho cumulativo e lift, e calcular precison@k/recall@k de cada modelo.
-
-
-Criar tabela de performance comparando precison@k/recall@k de cada modelo.
+- Rodar algoritmos: KNN classifier, Logistic regression, ExtraTrees classifier, e XGBboost classifier.
+- Plotar curva de ganho cumulativo e lift, e calcular precison@k/recall@k de cada modelo.
+- Criar tabela de performance comparando precison@k/recall@k de cada modelo.
 
 
 ## Step 08. Hyperparameter Fine Tunning:
 
-Fazer um ajuste fino de hiperparâmetros em cada modelo, identificando o melhor conjunto de parâmetros para maximizar suas capacidades de aprendizagem.
-Aplicar validação cruzada em cada modelo, reduzindo o viés de seleção (teoria da amostragem), por utilizar várias amostras diferentes dos dados.
-Selecionar os 4 modelos com melhor conjunto de hiperparâmetros, e avaliar sua capacidade de aprendizagem.
-Plotar curvas de ganho cumulativo e lift, comparando os 4 modelos.
-Calcular precison@k/recall@k dos 4 modelos, e selecionar o de melhor performance.
-Submeter esse modelo aos dados de teste, e plotar suas curvas de ganho cumulativo e lift.
-Comparar precison@k/recall@k em treino vs. teste, avaliando a capacidade de generalização do modelo (aprendizado com dados inéditos).
+- Fazer um ajuste fino de hiperparâmetros em cada modelo, identificando o melhor conjunto de parâmetros para maximizar suas capacidades de aprendizagem.
+- Aplicar validação cruzada em cada modelo, reduzindo o viés de seleção (teoria da amostragem), por utilizar várias amostras diferentes dos dados.
+- Selecionar os 4 modelos com melhor conjunto de hiperparâmetros, e avaliar sua capacidade de aprendizagem.
+- Plotar curvas de ganho cumulativo e lift, comparando os 4 modelos.
+- Calcular precison@k/recall@k dos 4 modelos, e selecionar o de melhor performance.
+- Submeter esse modelo aos dados de teste, e plotar suas curvas de ganho cumulativo e lift.
+- Comparar precison@k/recall@k em treino vs. teste, avaliando a capacidade de generalização do modelo (aprendizado com dados inéditos).
 
 ## Step 09. Convert Model Performance to Business Values:
 
-Responder as questões de negócio do gestor ao call center.
-Comprarar resultados da lista aleatória com a lista ordenada por propensão de compra.
-Traduzir a performance do modelo em resultados financeiros para a Insurance All.
+- Responder as questões de negócio do gestor ao call center.
+- Comprarar resultados da lista aleatória com a lista ordenada por propensão de compra.
+- Traduzir a performance do modelo em resultados financeiros para a Insurance All.
 
 ## **Step 10. Deploy Modelo to Production:**
 
-Criar as classes para publicação em produção.
-Testar as classes localmente.
-Publicar modelo no Heroku Cloud.
-Criar App Script em Google Sheets para consultar o modelo em produção.
-Implementar botão que consulta a propensão de compra dos clientes no Google Sheets, e testar a solução.
+- Criar as classes para publicação em produção.
+- Testar as classes localmente.
+- Publicar modelo no Heroku Cloud.
+- Criar App Script em Google Sheets para consultar o modelo em produção.
+- Implementar botão que consulta a propensão de compra dos clientes no Google Sheets, e testar a solução.
 
 
 ## 4. Os 3 principais insights dos dados
@@ -142,23 +143,22 @@ Insights são informações novas, ou que contrapõe crenças até então estabe
 
 ### H1 - O interesse é maior em clientes com idade maior.
 
-**Hipótese falsa.** Pode ser observado que clientes entre 40-45 anos são os mais interessados em seguro veicular.
-
 ![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68315f6167652e706e673f7261773d74727565](https://user-images.githubusercontent.com/55566708/171983756-a5604bc0-b097-4a20-a3b5-da5526bf48c8.png)
 
+**Hipótese falsa.** Pode ser observado que clientes entre 40-45 anos são os mais interessados em seguro veicular.
 
 **Insight de negócio:** Utilizar o conhecimento da faixa etária mais interessada em campanhas de marketing direcionadas.
 
 
 ### H2 - O interesse é maior em clientes que possuem veículos mais novos.
 
+![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68325f76656869636c655f6167652e7](https://user-images.githubusercontent.com/55566708/171983732-f2dbfe6c-1a68-46be-98f1-8796bebe4672.png)
+
 **Hipótese falsa**. Quando mais velho o veículo, maior é o interesse em seguro veicular:
 
-4% dos clientes com veículos abaixo de 1 ano possuem interesse.
-17% dos clientes com veículos entre 1 e 2 anos possuem interesse.
-29% dos clientes com veículos com mais de 2 anos possuem interesse.
-
-![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68325f76656869636c655f6167652e7](https://user-images.githubusercontent.com/55566708/171983732-f2dbfe6c-1a68-46be-98f1-8796bebe4672.png)
+- 4% dos clientes com veículos abaixo de 1 ano possuem interesse.
+- 17% dos clientes com veículos entre 1 e 2 anos possuem interesse.
+- 29% dos clientes com veículos com mais de 2 anos possuem interesse.
 
 
 **Insight de negócio:** Buscar dados de acionamento de seguro por clientes com veículos mais velhos, a fim de validar esta possível correlação. Havendo correlação, avaliar necessidade de reajustes no preço dos seguro ofertados a estes clientes.
@@ -166,12 +166,11 @@ Insights são informações novas, ou que contrapõe crenças até então estabe
 
 ### H3 - O interesse é maior em clientes que possuíam seu veículo previamente segurado.
 
-**Hipótese falsa.** 22% dos clientes que não possuíam veículo previamente segurado estão interessados em seguro de veículo, enquanto apenas 1% dos clientes que possuíam seguro tem interesse.
-
 ![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f68335f707265765f696e73757265642](https://user-images.githubusercontent.com/55566708/171983715-b79e497a-f091-4f71-843d-cf1b8b238e7c.png)
 
-**Insight de negócio:** Obter informações sobre as condições dos seguros dos clientes que possuem seguro e não possuem interesse, realizando um benchmarking entre a oferta da Insurance All e a da concorrência, visando tornar-se mais atrativo a eles.
+**Hipótese falsa.** 22% dos clientes que não possuíam veículo previamente segurado estão interessados em seguro de veículo, enquanto apenas 1% dos clientes que possuíam seguro tem interesse.
 
+**Insight de negócio:** Obter informações sobre as condições dos seguros dos clientes que possuem seguro e não possuem interesse, realizando um benchmarking entre a oferta da Insurance All e a da concorrência, visando tornar-se mais atrativo a eles.
 
 
 ## 5. Modelo de Machine Learning aplicado
@@ -181,9 +180,14 @@ Pro fim, o modelo de base é também exibido, representando a lista aleatória d
 Curva de Ganhos Acumulados: ordenada por probabilidade de compra, cruza o percentual da base de clientes com o percentual de clientes propensos a comprar.
 Ex: 40% da base de clientes (x), ordenada pela probabilidade de compra (y), contém 80% de todos os interessados em seguro veicular.
 
+![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f6761696e735f63757276655f66696e6](https://user-images.githubusercontent.com/55566708/172224266-54ec1968-d58e-42a7-a7f7-d368afbbe648.png)
+
 Na curva lift abaixo, os 4 modelos somados ao modelo perfeito e o baseline também são exibidos.
 Lift Curve: representa a diferença entre a curva de ganho e a lista aleatória. Portanto, informa o quanto o modelo é melhor que lista aleatória.
 Ex: Abrangendo 40% da lista ordenada, o modelo é 2,2 vezes melhor que a lista aleatória.
+
+![68747470733a2f2f6769746875622e636f6d2f6e6f72746f6e76616e7a2f4865616c74682d496e737572616e63652d52616e6b696e672f626c6f622f70613030345f6e6f72746f6e5f76616e7a2f696d616765732f6c6966745f6375727665735f66696e6](https://user-images.githubusercontent.com/55566708/172224346-bcd95ca4-4547-43f6-9dc6-55b44b806f4a.png)
+
 
 Nas tabelas abaixo, precision@k e recall@k são exibidas para os diferentes modelos selecionados.
 Precision@k: conta quantas previsões foram corretas até k e divide por todas as previsões feitas até k.
@@ -191,19 +195,12 @@ Ex: Precisão top 40% (ou 12196) k = 0,25 - Significa que em 40% da base, o mode
 
 
 
-Precision@
-K-nearest neighbors
-Catboost
-Extra Trees classifier
-Xgboost classifier
-Perfect model
-
 |     Precision@      |     K-nearest neighbors     |           Catboost         |  Extra Trees classifier  |    Xgboost classifier   | Perfect model |
 |---------------------|-----------------------------|----------------------------|--------------------------|-------------------------|---------------|
 |     10% (3049)      |             0.49            |             0.47           |           1              |           0.39          |       1       |
-|     20% (6098)      |             0.41            |             0.39           |           0.61           |           0.35          |       0.37    |
-|     30% (9147)      |             0.35            |             0.34           |           0.41           |           0.32          |       0.37    |
-|     40% (12196)     |             0.29            |             0.29           |           0.31           |           0.28          |       0.37    |
+|     20% (6098)      |             0.41            |             0.39           |           0.61           |           0.35          |       0.61    |
+|     30% (9147)      |             0.35            |             0.34           |           0.41           |           0.32          |       0.41    |
+|     40% (12196)     |             0.29            |             0.29           |           0.31           |           0.28          |       0.31    |
 
 
 
@@ -215,10 +212,10 @@ Ex: Recall top 40% (ou 12196) k = 0,8 - Significa que 80% do total de clientes i
 
 |       Recall@       |     K-nearest neighbors     |           Catboost         |  Extra Trees classifier  |    Xgboost classifier   | Perfect model |
 |---------------------|-----------------------------|----------------------------|--------------------------|-------------------------|---------------|
-|     10% (3049)      |             0.40            |             0.38           |           0.82           |           0.32          |       1       |
-|     20% (6098)      |             0.67            |             0.64           |           1              |           0.57          |       0.37    |
-|     30% (9147)      |             0.86            |             0.82           |           1              |           0.77          |       0.37    |
-|     40% (12196)     |             0.96            |             0.94           |           1              |           0.92          |       0.37    |
+|     10% (3049)      |             0.40            |             0.38           |           0.82           |           0.32          |       0.82    |
+|     20% (6098)      |             0.67            |             0.64           |           1              |           0.57          |       1       |
+|     30% (9147)      |             0.86            |             0.82           |           1              |           0.77          |       1       |
+|     40% (12196)     |             0.96            |             0.94           |           1              |           0.92          |       1       |
 
 
 O melhor modelo portanto foi o XGBoost Classifier, e por isso foi eleito para deploy em produção.
