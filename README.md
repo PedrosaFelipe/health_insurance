@@ -231,10 +231,10 @@ Na sequência, as duas tabelas demonstram os valores de precision@k e recall@k d
 
 | Precision@  | Xgboost classifier (train)  | Xgboost classifier (test)  | 
 |-------------|-----------------------------|----------------------------|
-|     10%     |             0.39            |             0.39           |   
-|     20%     |             0.39            |             0.39           |   
-|     30%     |             0.39            |             0.39           |   
-|     40%     |             0.39            |             0.39           |  
+|     10%     |             0.39            |             0.33           |   
+|     20%     |             0.35            |             0.32           |   
+|     30%     |             0.32            |             0.30           |   
+|     40%     |             0.28            |             0.37           |  
 
 
 
@@ -243,10 +243,10 @@ Na sequência, as duas tabelas demonstram os valores de precision@k e recall@k d
 
 | Recall@     | Xgboost classifier (train)  | Xgboost classifier (test)  | 
 |-------------|-----------------------------|----------------------------|
-|     10%     |             0.39            |             0.39           |   
-|     20%     |             0.39            |             0.39           |   
-|     30%     |             0.39            |             0.39           |   
-|     40%     |             0.39            |             0.39           | 
+|     10%     |             0.32            |             0.27           |   
+|     20%     |             0.57            |             0.51           |   
+|     30%     |             0.77            |             0.73           |   
+|     40%     |             0.92            |             0.90           | 
 
 Isto evidencia que o modelo tem uma boa capacidade de generalização, ou seja, é capaz de aprender com dados nunca antes vistos.
 
@@ -256,52 +256,56 @@ O ticket médio para um seguro de saúde anual da Insurance All é: $ 31669.
 Vamos assumir todos os clientes interessados no seguro veicular irão assinar o contrato, e que o valor médio do seguro do veículos será o mesmo do seguro saúde.
 As questões de negócios abaixo serão respondidas com base nas premissas citadas.
 
-Qual a porcentagem de clientes interessados em seguro veicular, o call center conseguirá contatar fazendo 20 mil ligações?
+## Qual a porcentagem de clientes interessados em seguro veicular, o call center conseguirá contatar fazendo 20 mil ligações?
 
-Pela lista aleatória:
+**Pela lista aleatória:**
 
-A equipe de vendas contata 26% dos interessados em seguro veicular: 2.451 clientes (ver Ganho: cruzamento linha preta x verde).
+- A equipe de vendas contata 26% dos interessados em seguro veicular: 2.451 clientes (ver Ganho: cruzamento linha preta x verde).
 ==> **Receita estimada:** 2.451 * 31.669 = US$ 77,62 milhões por ano.
 
-Pela lista ordenada (modelo):
+**Pela lista ordenada (modelo):**
 
-A equipe de vendas contata 70% dos interessados em seguro veicular: 6.576 clientes (ver Ganho: cruzamento linha azul x verde).
+- A equipe de vendas contata 70% dos interessados em seguro veicular: 6.576 clientes (ver Ganho: cruzamento linha azul x verde).
 ==> **Receita estimada:** 6.576 * 31.669 = US$ 208,26 milhões por ano.
 
 ![download](https://user-images.githubusercontent.com/55566708/171787866-dcc5b618-278d-4e93-8588-df2db493143c.png)
 
 
-RESULTADO: O modelo é 2,68 vezes melhor que a lista aleatória (ver Lift: linha azul x verde).
-Portanto, a receita estimada é 2,68 vezes maior que a lista aleatória: US$ 130,63 milhões.
+**RESULTADO:** O modelo é 2,68 vezes melhor que a lista aleatória (ver Lift: linha azul x verde).
+Portanto, a receita estimada é **2,68 vezes maior que a lista aleatória: US$ 130,63 milhões.**
 
-Se a capacidade do call center aumentar para 40 mil ligações, qual a porcentagem de clientes interessados em adquirir um seguro veicular o call center conseguirá contatar?
+## Se a capacidade do call center aumentar para 40 mil ligações, qual a porcentagem de clientes interessados em adquirir um seguro veicular o call center conseguirá contatar?
 
-Pela lista aleatória:
+**Pela lista aleatória:**
 
 A equipe de vendas contata 52% dos interessados em seguro veicular: 4902 clientes (ver Ganho: cruzamento linha preta x verde).
 ==> **Receita estimada** = 4902 * 31669 = US$ 155,24 milhões por ano.
 
-Pela lista ordenada (modelo):
+**Pela lista ordenada (modelo):**
 
 A equipe de vendas contata 99,5% dos interessados em seguro veicular: 9.294 clientes (ver Ganho: cruzamento linha azul x verde).
 ==> **Receita estimada:** 9.291 * 31.669 = US$ 294,24 milhões por ano.
 
+![2](https://user-images.githubusercontent.com/55566708/172533567-98ca05f5-ed9e-4602-b23c-967f1aa50616.png)
+
 **RESULTADO**: O modelo é 1,9 vezes melhor que a lista aleatória (ver Lift: cruzamento linha azul x verde).
-Portanto, a receita estimada é 1,9 vezes maior que a lista aleatória: US$ 139 milhões.
+Portanto, a receita estimada é **1,9 vezes maior que a lista aleatória: US$ 139 milhões.
 
-Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
+## Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
 
-Pela lista aleatória:
+**Pela lista aleatória:**
 
 A equipe de vendas precisa fazer 60.976 ligações, para entrar em contato com 80% dos clientes da lista, então atingirá 80% dos interessados em seguro veicular.
 
-Pela lista ordenada (modelo):
+**Pela lista ordenada (modelo):**
 
-A equipe de vendas precisa fazer 23.800 ligações, para entrar em contato com 31% dos clientes da lista, então atingirá 80% dos interessados em seguro veicular (ver Ganho: cruzamento linha azul x verde).
+A equipe de vendas precisa fazer 23.800 ligações, para entrar em contato com 31% dos clientes da lista, então atingirá 80% dos interessados em seguro veicular (ver **Ganho:** cruzamento linha azul x verde).
 
-**RESULTADO** : Fazendo 23800 ligações, o modelo é 2,6 vezes melhor que a lista aleatória. (ver Lift: cruzamento linha azul x verde).
+![3](https://user-images.githubusercontent.com/55566708/172533729-1e9eca10-6cff-48a9-8951-7bff6060679a.png)
 
-Planilha funcional em Google Sheets
+**RESULTADO** : Fazendo 23800 ligações, o modelo é **2,6 vezes melhor que a lista aleatória.** (ver Lift: cruzamento linha azul x verde).
+
+*Planilha funcional em Google Sheets*
 
 Acesso a planilha: Google Sheets - Health Insurance Ranking
 
@@ -309,19 +313,19 @@ https://user-images.githubusercontent.com/55566708/171785822-861f3239-54ef-4feb-
 
 
 ## 8. Conclusões
-Com base nos resultados de negócio, conclui-se que o objetivo do projeto foi acançado.
-Com a solução de dados entregue, a Insurance All possui agora uma vantagem competitiva frente aos seus concorrentes, reduzindo o custo de aquisição de clientes, e aumentando o seu faturamento.
-Pelo fato da solução implementada via planilha poder ser utilizada para novos clientes que ainda nem foram consquistados, é esperado um incremento ainda maior no faturamento esperado.
-É possível ainda aproveitar a solução para simular perfis de clientes, funcionalidade que é de grande valia para a empresa.
+- Com base nos resultados de negócio, conclui-se que o objetivo do projeto foi alcançado.
+- Com a solução de dados entregue, a Insurance All possui agora uma vantagem competitiva frente aos seus concorrentes, reduzindo o custo de aquisição de clientes, e aumentando o seu faturamento.
+- Pelo fato da solução implementada via planilha poder ser utilizada para novos clientes que ainda nem foram consquistados, é esperado um incremento ainda maior no faturamento esperado.
+- É possível ainda aproveitar a solução para simular perfis de clientes, funcionalidade que é de grande valia para a empresa.
 
 ## 9. Melhorias futuras
 
-Criar mais atributos a partir dos já existentes, buscando gerar mais insumos para o aprendizado dos modelos.
-Utilizar mais de um método de seleção de atributos, incluindo o Boruta ou o RFECV por exemplo.
-Utilizar o Optuna no hyperparameter fine tunning, visando otimizar os modelos.
+- Criar mais atributos a partir dos já existentes, buscando gerar mais insumos para o aprendizado dos modelos.
+- Utilizar mais de um método de seleção de atributos, incluindo o Boruta ou o RFECV por exemplo.
+- Utilizar o Optuna no hyperparameter fine tunning, visando otimizar os modelos.
 
 
 ## 10 Referências
 
 O Dataset foi obtido no Kaggle.
-A imagem utilizada é de uso livre e foi obtida no Pexels.
+A imagem utilizada é de uso livre e foi obtida no Pinterest.
