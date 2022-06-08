@@ -289,7 +289,7 @@ A equipe de vendas contata 99,5% dos interessados em seguro veicular: 9.294 clie
 ![2](https://user-images.githubusercontent.com/55566708/172533567-98ca05f5-ed9e-4602-b23c-967f1aa50616.png)
 
 **RESULTADO**: O modelo é 1,9 vezes melhor que a lista aleatória (ver Lift: cruzamento linha azul x verde).
-Portanto, a receita estimada é **1,9 vezes maior que a lista aleatória: US$ 139 milhões.
+Portanto, a receita estimada é **1,9 vezes maior que a lista aleatória: US$ 139 milhões.**
 
 ## Quantas ligações o call center precisa fazer para contatar 80% dos clientes interessados em adquirir um seguro veicular?
 
